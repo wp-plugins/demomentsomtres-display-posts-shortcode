@@ -469,6 +469,7 @@ class DeMomentSomTresDisplayPostShortcode {
      * @since 2.1
      */
     function empty_query_message($output) {
+        $name=self::OPTION_EMPTY_MESSAGE;
         $message = DeMomentSomTresTools::get_option(self::OPTIONS, $name,__('No results found.',self::TEXT_DOMAIN));
         $output = '<p>'.$message.'</p>';
         return $output;
