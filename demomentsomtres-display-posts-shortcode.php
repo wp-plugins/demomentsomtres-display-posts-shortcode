@@ -3,7 +3,7 @@
  * Plugin Name: DeMomentSomTres Display Posts Shortcode
  * Plugin URI: http://demomentsomtres.com/english/wordpress-plugins/demomentsomtres-display-posts-shortcode/
  * Description: Display a listing of posts using the [display-posts] shortcode
- * Version: 2.1
+ * Version: 2.1.1
  * Author: Marc Queralt
  * Author URI: http://demomentsomtres.com
  *
@@ -87,7 +87,7 @@ class DeMomentSomTresDisplayPostShortcode {
         add_action('plugins_loaded', array(&$this, 'plugin_init'));
         add_shortcode('display-posts', array(&$this, 'demomentsomtres_display_posts_shortcode'));
         add_filter('display_posts_shortcode_args', array(&$this, 'demomentsomtres_display_posts_shortcode_metaorderby'), 10, 2); //v1.1+
-        add_filter('display_posts_shortcode_no_results', array(&$this, 'empty_query_message'));
+        add_filter('display_posts_shortcode_no_results', array(&$this, 'filter_empty_query_message'));
         add_action('admin_menu', array(&$this, 'admin_menu'));
         add_action('admin_init', array(&$this, 'admin_init'));
     }
@@ -141,7 +141,7 @@ class DeMomentSomTresDisplayPostShortcode {
 
         add_settings_field(self::OPTION_JAVASCRIPT_FUNCTION, __('Javascript funtion name', self::TEXT_DOMAIN), array(&$this, 'admin_field_javascript_function'), self::PAGE, self::SECTION_JAVASCRIPT);
         add_settings_field(self::OPTION_JAVASCRIPT_PARAMETERS, __('Javascript funtion parameters', self::TEXT_DOMAIN), array(&$this, 'admin_field_javascript_parameters'), self::PAGE, self::SECTION_JAVASCRIPT);
-        
+
         add_settings_field(self::OPTION_EMPTY_MESSAGE, __('Empty message', self::TEXT_DOMAIN), array(&$this, 'admin_field_empty_message'), self::PAGE, self::SECTION_EMPTY);
     }
 
@@ -215,7 +215,7 @@ class DeMomentSomTresDisplayPostShortcode {
      */
     function admin_field_empty_message() {
         $name = self::OPTION_EMPTY_MESSAGE;
-        $value = DeMomentSomTresTools::get_option(self::OPTIONS, $name,__('No results found.',self::TEXT_DOMAIN));
+        $value = DeMomentSomTresTools::get_option(self::OPTIONS, $name, __('No results found.', self::TEXT_DOMAIN));
         DeMomentSomTresTools::adminHelper_inputArray(self::OPTIONS, $name, $value, array(
             'class' => 'regular-text',
         ));
@@ -468,10 +468,10 @@ class DeMomentSomTresDisplayPostShortcode {
     /**
      * @since 2.1
      */
-    function empty_query_message($output) {
-        $name=self::OPTION_EMPTY_MESSAGE;
-        $message = DeMomentSomTresTools::get_option(self::OPTIONS, $name,__('No results found.',self::TEXT_DOMAIN));
-        $output = '<p>'.$message.'</p>';
+    function filter_empty_query_message($output) {
+        $name = DeMomentSomTresDisplayPostShortcode::OPTION_EMPTY_MESSAGE;
+        $message = DeMomentSomTresTools::get_option(DeMomentSomTresDisplayPostShortcode::OPTIONS, $name, __('No results found.', DeMomentSomTresDisplayPostShortcode::TEXT_DOMAIN));
+        $output = '<p>' . $message . '</p>';
         return $output;
     }
 

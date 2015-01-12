@@ -34,6 +34,9 @@ This plugin can be installed as any other WordPress plugin.
 
 == Changelog ==
 
+= v2.1.1 =
+* Compatibility bug in 2.1 solved
+
 = v2.1 =
 * Empty query message
 
