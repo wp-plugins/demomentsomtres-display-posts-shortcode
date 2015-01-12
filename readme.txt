@@ -2,8 +2,8 @@
 Contributors: marcqueralt
 Tags: shortcode, pages, posts, page, query, display, list, multisite
 Requires at least: 3.0
-Tested up to: 3.4.2
-Stable tag: 1.0.1
+Tested up to: 4.0
+Stable tag: trunk
 
 Display a listing of posts using the [display-posts] shortcode allowing multiple network instances.
 
@@ -20,18 +20,30 @@ Add the parameter blog_id to change the network instance number.
 
 See the [WordPress Codex](http://codex.wordpress.org/Class_Reference/WP_Query) for information on using the arguments.
 
+The parameter metaorderby allows to order based on a metafield or customfield value. The parameter metaorderbynum does the same but considering the values as numbers.
+
 = History & Raison d'être =
 A customer of us needed a multisite website to implement multiple languages and she was using [DeMomentSomTres Language Plugin](http://demomentsomtres.com/english/wordpress-plugins/demomentsomtres-language/). Although they could have many blogs they didn't want to keep 3 blogs informed. However they wanted to show the blog in all the subsites. So we build this plugin allowing to show blog content from other sites in the multisite installation.
+
 == Installation ==
+This plugin can be installed as any other WordPress plugin. 
 
-1. Upload `display-posts-shortcode` to the `/wp-content/plugins/` directory.
-1. Activate the plugin through the *Plugins* menu in WordPress.
-1. Add the shortcode to a post or page. 
+= Requirements =
 
+* Uses [DeMomentSomTresTools Plugin](http://demomentsomtres.com/english/wordpress-plugins/demomentsomtres-tools/).
 
 == Changelog ==
 
-**Version 1.0**
+= v2.1 =
+* Empty query message
+
+= v1.1 =
+* metaorderby attribute added
+* metaorderbynum attibute added
+* administration page
+* open using javascript
+
+= v1.0 =
 * Initial version based on 2.2 by Bill Erickson.
 * Network parameter added.
 
