@@ -441,7 +441,9 @@ class DeMomentSomTresDisplayPostShortcode {
 
         $open = apply_filters('display_posts_shortcode_wrapper_open', '<' . $wrapper . ' class="display-posts-listing">');
         $close = apply_filters('display_posts_shortcode_wrapper_close', '</' . $wrapper . '>');
-        restore_current_blog(); //MQB1.1+
+        if ($blogid != $blog_id)://MQB2.1.2+
+            restore_current_blog(); //MQB1.1+
+        endif; //MQB2.1.2+
         $return = $open . $inner . $close;
 
         return $return;
