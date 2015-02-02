@@ -2,7 +2,7 @@
 Contributors: marcqueralt
 Tags: shortcode, pages, posts, page, query, display, list, multisite
 Requires at least: 3.0
-Tested up to: 4.0
+Tested up to: 4.1
 Stable tag: trunk
 
 Display a listing of posts using the [display-posts] shortcode allowing multiple network instances.
@@ -33,12 +33,8 @@ This plugin can be installed as any other WordPress plugin.
 * Uses [DeMomentSomTresTools Plugin](http://demomentsomtres.com/english/wordpress-plugins/demomentsomtres-tools/).
 
 == Changelog ==
-
 = v2.1.2 =
-* Non multisite compatibility
-
-= v2.1.1 =
-* Compatibility bug in 2.1 solved
+* Multisite error on empty queries solved.
 
 = v2.1 =
 * Empty query message

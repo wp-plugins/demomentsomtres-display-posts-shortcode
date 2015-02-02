@@ -3,7 +3,7 @@
  * Plugin Name: DeMomentSomTres Display Posts Shortcode
  * Plugin URI: http://demomentsomtres.com/english/wordpress-plugins/demomentsomtres-display-posts-shortcode/
  * Description: Display a listing of posts using the [display-posts] shortcode
- * Version: 2.1.1
+ * Version: 2.1.2
  * Author: Marc Queralt
  * Author URI: http://demomentsomtres.com
  *
@@ -79,6 +79,7 @@ class DeMomentSomTresDisplayPostShortcode {
     /**
      * @since 1.1
      */
+
     function __construct() {
         $this->pluginURL = plugin_dir_url(__FILE__);
         $this->pluginPath = plugin_dir_path(__FILE__);
@@ -230,6 +231,7 @@ class DeMomentSomTresDisplayPostShortcode {
 
     function demomentsomtres_display_posts_shortcode($atts) {
         global $blog_id; //MQB1.0+
+        $currentBlogID = $blog_id; //MQB2.1.2+
         // Original Attributes, for filters
         $original_atts = $atts;
 
@@ -399,9 +401,13 @@ class DeMomentSomTresDisplayPostShortcode {
             switch_to_blog($blogid); //MQB1.0+
         endif; //MQB1.0+
         $listing = new WP_Query(apply_filters('display_posts_shortcode_args', $args, $original_atts));
-        if (!$listing->have_posts())
+        if (!$listing->have_posts()):
+            if ($blogid != $currentBlogID)://MQB2.1.2+
+                restore_current_blog();    //MQB2.1.2+
+            endif;                         //MQB2.1.2+
             return apply_filters('display_posts_shortcode_no_results', false);
-
+        endif;
+        
         $inner = '';
 
         $i = 0; //MQB1.3+
@@ -441,11 +447,10 @@ class DeMomentSomTresDisplayPostShortcode {
 
         $open = apply_filters('display_posts_shortcode_wrapper_open', '<' . $wrapper . ' class="display-posts-listing">');
         $close = apply_filters('display_posts_shortcode_wrapper_close', '</' . $wrapper . '>');
-        if ($blogid != $blog_id)://MQB2.1.2+
+        if ($blogid != $currentBlogID)://MQB2.1.2+
             restore_current_blog(); //MQB1.1+
         endif; //MQB2.1.2+
         $return = $open . $inner . $close;
-
         return $return;
     }
 
@@ -471,9 +476,9 @@ class DeMomentSomTresDisplayPostShortcode {
      * @since 2.1
      */
     function filter_empty_query_message($output) {
-        $name = DeMomentSomTresDisplayPostShortcode::OPTION_EMPTY_MESSAGE;
-        $message = DeMomentSomTresTools::get_option(DeMomentSomTresDisplayPostShortcode::OPTIONS, $name, __('No results found.', DeMomentSomTresDisplayPostShortcode::TEXT_DOMAIN));
-        $output = '<p>' . $message . '</p>';
+        $name = self::OPTION_EMPTY_MESSAGE;
+        $value = DeMomentSomTresTools::get_option(self::OPTIONS, $name);
+        $output = '<p>' . $value . '</p>';
         return $output;
     }
 
