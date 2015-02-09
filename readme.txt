@@ -33,6 +33,9 @@ This plugin can be installed as any other WordPress plugin.
 * Uses [DeMomentSomTresTools Plugin](http://demomentsomtres.com/english/wordpress-plugins/demomentsomtres-tools/).
 
 == Changelog ==
+= v2.1.3 = 
+* order_by parameter in shortcode acts exactly as orderby
+
 = v2.1.2 =
 * Multisite error on empty queries solved.
 

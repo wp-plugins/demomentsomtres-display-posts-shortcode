@@ -3,7 +3,7 @@
  * Plugin Name: DeMomentSomTres Display Posts Shortcode
  * Plugin URI: http://demomentsomtres.com/english/wordpress-plugins/demomentsomtres-display-posts-shortcode/
  * Description: Display a listing of posts using the [display-posts] shortcode
- * Version: 2.1.2
+ * Version: 2.1.3
  * Author: Marc Queralt
  * Author URI: http://demomentsomtres.com
  *
@@ -79,7 +79,6 @@ class DeMomentSomTresDisplayPostShortcode {
     /**
      * @since 1.1
      */
-
     function __construct() {
         $this->pluginURL = plugin_dir_url(__FILE__);
         $this->pluginPath = plugin_dir_path(__FILE__);
@@ -234,7 +233,9 @@ class DeMomentSomTresDisplayPostShortcode {
         $currentBlogID = $blog_id; //MQB2.1.2+
         // Original Attributes, for filters
         $original_atts = $atts;
-
+        if (isset($atts['order_by'])):// MQB2.1.3+
+            $atts['orderby'] = $atts['order_by']; //MQB2.1.3+
+        endif; // MQB2.1.3+
         //MQB2.0++
         $default_js_output = DeMomentSomTresTools::get_option(self::OPTIONS, self::OPTION_JAVASCRIPT_OUTPUT, "off");
         $default_js_function = DeMomentSomTresTools::get_option(self::OPTIONS, self::OPTION_JAVASCRIPT_FUNCTION, "");
@@ -407,7 +408,7 @@ class DeMomentSomTresDisplayPostShortcode {
             endif;                         //MQB2.1.2+
             return apply_filters('display_posts_shortcode_no_results', false);
         endif;
-        
+
         $inner = '';
 
         $i = 0; //MQB1.3+
@@ -451,6 +452,7 @@ class DeMomentSomTresDisplayPostShortcode {
             restore_current_blog(); //MQB1.1+
         endif; //MQB2.1.2+
         $return = $open . $inner . $close;
+//        $return .= '<pre style="display:none">' . print_r($original_atts, true) . '</pre>';//Debugging purposes only
         return $return;
     }
 
