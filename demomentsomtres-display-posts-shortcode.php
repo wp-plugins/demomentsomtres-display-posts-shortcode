@@ -3,7 +3,7 @@
  * Plugin Name: DeMomentSomTres Display Posts Shortcode
  * Plugin URI: http://demomentsomtres.com/english/wordpress-plugins/demomentsomtres-display-posts-shortcode/
  * Description: Display a listing of posts using the [display-posts] shortcode
- * Version: 2.4
+ * Version: 2.4.1
  * Author: Marc Queralt
  * Author URI: http://demomentsomtres.com
  *
@@ -274,6 +274,7 @@ class DeMomentSomTresDisplayPostShortcode {
             'empty' => '', //2.2+
             'excludecategory' => '', //2.3+
             'imageaftertitle' => false, //2.4+
+            'imagenolink'=>false, //2.4.1+
                 ), $atts);
 //        echo '<pre>'.print_r($atts,true).'</pre>';
         $author = sanitize_text_field($atts['author']);
@@ -299,6 +300,7 @@ class DeMomentSomTresDisplayPostShortcode {
         $blogid = $atts['blog_id']; //MQB1.1+
         $excludeCategory = sanitize_text_field($atts['excludecategory']); //v2.3+
         $imageaftertitle = (bool) $atts['imageaftertitle'];
+        $imagenolink = (bool) $atts['imagenolink'];
 
         // Set up initial query for post
         $args = array(
@@ -448,9 +450,12 @@ class DeMomentSomTresDisplayPostShortcode {
             $title = '<a class="title" ' . $this->href(get_permalink(), $atts) . '>' . get_the_title() . '</a>'; //MQB2.0+
 
             if ($image_size && has_post_thumbnail())
+                if($imagenolink):
+                    $image = get_the_post_thumbnail($post->ID, $image_size); //MQB2.4.1+
+                else:
             //$image = '<a class="image" href="' . get_permalink() . '">' . get_the_post_thumbnail($post->ID, $image_size) . '</a> ';//MQB2.0-
                 $image = '<a class="image" ' . $this->href(get_permalink(), $atts) . '>' . get_the_post_thumbnail($post->ID, $image_size) . '</a> '; //MQB2.0+
-
+endif;
             if ($include_date)
                 $date = ' <span class="date">' . get_the_date($date_format) . '</span>';
 

@@ -2,7 +2,7 @@
 Contributors: marcqueralt
 Tags: shortcode, pages, posts, page, query, display, list, multisite
 Requires at least: 3.0
-Tested up to: 4.2.2
+Tested up to: 4.1.2
 Stable tag: trunk
 
 Display a listing of posts using the [display-posts] shortcode allowing multiple network instances.
@@ -33,6 +33,9 @@ This plugin can be installed as any other WordPress plugin.
 * Uses [DeMomentSomTresTools Plugin](http://demomentsomtres.com/english/wordpress-plugins/demomentsomtres-tools/).
 
 == Changelog ==
+= v.2.4.1 =
+* parameter imagenolink to show thumbnails without links. Video thumbnail compatibility issue.
+
 = v2.4 =
 * Parameter imageaftertitle if set to true
 
